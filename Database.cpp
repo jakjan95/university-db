@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 
 #include "Database.hpp"
@@ -19,7 +20,7 @@ void Database::performDatabaseOperation(Option operation)
 {
     switch (operation) {
     case Option::AddStudent:
-        std::cout << "  ADD NEW STUDENT\n";
+        addStudent();
         break;
     case Option::DisplayDatabase:
         std::cout << "  DISPLAY DATABASE\n";
@@ -71,4 +72,11 @@ void Database::quit()
 {
     std::cout << " QUITTING THE PROGRAM....... \n";
     std::exit(0);
+}
+
+void Database::addStudent()
+{
+    Student tmp;
+    std::cin >> tmp;
+    data_.emplace_back(tmp);
 }
