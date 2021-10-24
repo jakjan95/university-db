@@ -11,6 +11,8 @@ public:
     Address(const std::string& postalCode, const std::string& town, const std::string& street,
         const std::string& buildingNumber, std::optional<size_t> flatNumber = std::nullopt);
 
+    void setFlatNumber(size_t flatNumber) { flatNumber_.emplace(flatNumber); }
+
     friend std::ostream& operator<<(std::ostream& out, const Address& adr);
     friend std::istream& operator>>(std::istream& in, Address& adr);
 

@@ -34,6 +34,7 @@ private:
     void sortBySurname();
     void deleteRecord();
     void saveDatabaseToFile();
+    Address createAddress();
 
     std::vector<Student> data_;
 };

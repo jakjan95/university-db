@@ -80,11 +80,60 @@ void Database::quit()
     std::exit(0);
 }
 
+Address Database::createAddress()
+{
+    std::cout << " *** Addres data form ***\n";
+    std::cout << "Enter postal code [XX-XXX]: ";
+    std::string postalCode;
+    std::cin >> postalCode;
+    std::cout << "Enter town: ";
+    std::string town;
+    std::cin.ignore();
+    std::getline(std::cin, town);
+    std::cout << "Enter street: ";
+    std::string street;
+    std::getline(std::cin, street);
+    std::cout << "Enter building number: ";
+    std::string buildingNumber;
+    std::cin >> buildingNumber;
+
+    Address tmpAddress { postalCode, town, street, buildingNumber };
+
+    std::cout << "Is it flat? [Y/N]: ";
+    char isFlat;
+    std::cin >> isFlat;
+    if (isFlat == 'Y' || isFlat == 'y') {
+        std::cout << "Enter flat number: ";
+        size_t flatNum;
+        std::cin >> flatNum;
+        tmpAddress.setAddres(flatNum);
+    }
+    return tmpAddress;
+}
+
 void Database::addStudent()
 {
-    Student tmp;
-    std::cin >> tmp;
-    data_.emplace_back(tmp);
+    std::cout << " *** Student data form ***\n";
+    std::cout << "Enter name: ";
+    std::string name;
+    std::cin >> name;
+    std::cout << "Enter surname: ";
+    std::string surname;
+    std::cin >> surname;
+    std::cout << "Enter student number: ";
+    size_t studentNumber;
+    std::cin >> studentNumber;
+    std::cout << "Enter pesel: ";
+    size_t pesel;
+    std::cin >> pesel;
+    std::cout << "Enter gender [M/F]: ";
+    char gen;
+    std::cin >> gen;
+    auto gender = Student::getStudentGenderFromChar(gen);
+
+    auto tmpAddress = createAddress();
+    Student tmpStudent { name, surname, tmpAddress, studentNumber, pesel, gender };
+    data_.emplace_back(tmpStudent);
 }
 
 void Database::printIndexRow()
