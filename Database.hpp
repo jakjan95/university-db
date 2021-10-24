@@ -27,6 +27,7 @@ private:
     void printIndexRow();
     void displayDatabase();
     void addTestData();
+    void searchBySurname();
 
     std::vector<Student> data_;
 };

@@ -27,7 +27,7 @@ void Database::performDatabaseOperation(Option operation)
         displayDatabase();
         break;
     case Option::SearchBySurname:
-        std::cout << " SEARCH BY SURNAME\n";
+        searchBySurname();
         break;
     case Option::SearchByPesel:
         std::cout << " SEARCH BY PESEL\n";
@@ -132,4 +132,19 @@ void Database::addTestData()
     data_.emplace_back(testStudent4);
     data_.emplace_back(testStudent5);
     data_.emplace_back(testStudent6);
+}
+
+void Database::searchBySurname()
+{
+    std::cout << " ENTER SURNAME: ";
+    std::string surname;
+    std::cin >> surname;
+    auto it = std::find_if(data_.cbegin(), data_.cend(),
+        [&surname](const auto& el) { return surname == el.getSurname(); });
+
+    if (it != data_.cend()) {
+        std::cout << *it << '\n';
+    } else {
+        std::cout << " NOT FOUND!\n";
+    }
 }
