@@ -36,7 +36,7 @@ void Database::performDatabaseOperation(Option operation)
         sortByPesel();
         break;
     case Option::SortBySurname:
-        std::cout << " SORT BY SURNAME\n";
+        sortBySurname();
         break;
     case Option::DeleteRecord:
         std::cout << " DELETE RECORD\n";
@@ -169,4 +169,11 @@ void Database::sortByPesel()
     std::cout << " SORTING BY PESEL\n";
     std::sort(data_.begin(), data_.end(),
         [](const auto& lhs, const auto& rhs) { return lhs.getPesel() < rhs.getPesel(); });
+}
+
+void Database::sortBySurname()
+{
+    std::cout << " SORTING BY SURNAME\n";
+    std::sort(data_.begin(), data_.end(),
+        [](const auto& lhs, const auto& rhs) { return lhs.getSurname() < rhs.getSurname(); });
 }

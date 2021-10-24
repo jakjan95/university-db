@@ -30,6 +30,7 @@ private:
     void searchBySurname();
     void searchByPesel();
     void sortByPesel();
+    void sortBySurname();
 
     std::vector<Student> data_;
 };
