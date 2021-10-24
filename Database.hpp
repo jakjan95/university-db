@@ -29,7 +29,7 @@ private:
     void addTestData();
     void searchBySurname();
     void searchByPesel();
-
+    void sortByPesel();
 
     std::vector<Student> data_;
 };

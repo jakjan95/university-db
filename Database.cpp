@@ -33,7 +33,7 @@ void Database::performDatabaseOperation(Option operation)
         searchByPesel();
         break;
     case Option::SortByPesel:
-        std::cout << " SORT BY PESEL\n";
+        sortByPesel();
         break;
     case Option::SortBySurname:
         std::cout << " SORT BY SURNAME\n";
@@ -162,4 +162,11 @@ void Database::searchByPesel()
     } else {
         std::cout << " STUDENT WITH PESEL " << pesel << " NOT FOUND!\n";
     }
+}
+
+void Database::sortByPesel()
+{
+    std::cout << " SORTING BY PESEL\n";
+    std::sort(data_.begin(), data_.end(),
+        [](const auto& lhs, const auto& rhs) { return lhs.getPesel() < rhs.getPesel(); });
 }
