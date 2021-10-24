@@ -30,7 +30,7 @@ void Database::performDatabaseOperation(Option operation)
         searchBySurname();
         break;
     case Option::SearchByPesel:
-        std::cout << " SEARCH BY PESEL\n";
+        searchByPesel();
         break;
     case Option::SortByPesel:
         std::cout << " SORT BY PESEL\n";
@@ -145,6 +145,21 @@ void Database::searchBySurname()
     if (it != data_.cend()) {
         std::cout << *it << '\n';
     } else {
-        std::cout << " NOT FOUND!\n";
+        std::cout << " STUDENT WITH SURNAME " << surname << " NOT FOUND!\n";
+    }
+}
+
+void Database::searchByPesel()
+{
+    std::cout << " ENTER PESEL: ";
+    size_t pesel;
+    std::cin >> pesel;
+    auto it = std::find_if(data_.cbegin(), data_.cend(),
+        [&pesel](const auto& el) { return pesel == el.getPesel(); });
+
+    if (it != data_.cend()) {
+        std::cout << *it << '\n';
+    } else {
+        std::cout << " STUDENT WITH PESEL " << pesel << " NOT FOUND!\n";
     }
 }

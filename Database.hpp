@@ -28,6 +28,8 @@ private:
     void displayDatabase();
     void addTestData();
     void searchBySurname();
+    void searchByPesel();
+
 
     std::vector<Student> data_;
 };
