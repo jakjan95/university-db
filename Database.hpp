@@ -31,6 +31,7 @@ private:
     void searchByPesel();
     void sortByPesel();
     void sortBySurname();
+    void deleteRecord();
 
     std::vector<Student> data_;
 };

@@ -39,7 +39,7 @@ void Database::performDatabaseOperation(Option operation)
         sortBySurname();
         break;
     case Option::DeleteRecord:
-        std::cout << " DELETE RECORD\n";
+        deleteRecord();
         break;
     case Option::PrintMenu:
         printMenu();
@@ -176,4 +176,14 @@ void Database::sortBySurname()
     std::cout << " SORTING BY SURNAME\n";
     std::sort(data_.begin(), data_.end(),
         [](const auto& lhs, const auto& rhs) { return lhs.getSurname() < rhs.getSurname(); });
+}
+
+void Database::deleteRecord()
+{
+    std::cout << " ENTER STUDENT INDEX TO DELETE: ";
+    size_t index;
+    std::cin >> index;
+    data_.erase(std::remove_if(data_.begin(), data_.end(),
+                    [&index](const auto& el) { return el.getStudentNumber() == index; }),
+        data_.end());
 }
