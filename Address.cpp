@@ -12,12 +12,19 @@ Address::Address(const std::string& postalCode, const std::string& town, const s
 {
 }
 
+std::string Address::getAddressString() const
+{
+    std::stringstream ss;
+    ss << postalCode_ << ' ' << town_ << ", " << street_ << ' ' << buildingNumber_;
+    if (flatNumber_.has_value()) {
+        ss << '/' << flatNumber_.value();
+    }
+    return ss.str();
+}
+
 std::ostream& operator<<(std::ostream& out, const Address& adr)
 {
-    out << adr.postalCode_ << ' ' << adr.town_ << ", " << adr.street_ << ' ' << adr.buildingNumber_;
-    if (adr.flatNumber_.has_value()) {
-        out << '/' << adr.flatNumber_.value();
-    }
+    out << adr.getAddressString();
     return out;
 }
 

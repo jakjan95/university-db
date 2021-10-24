@@ -24,6 +24,9 @@ private:
     void printMenu();
     void quit();
     void addStudent();
+    void printIndexRow();
+    void displayDatabase();
+    void addTestData();
 
     std::vector<Student> data_;
 };

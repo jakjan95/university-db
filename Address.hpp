@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <sstream>
 
 class Address {
 public:
@@ -14,6 +15,8 @@ public:
     friend std::istream& operator>>(std::istream& in, Address& adr);
 
 private:
+    std::string getAddressString() const;
+
     std::string postalCode_;
     std::string town_;
     std::string street_;

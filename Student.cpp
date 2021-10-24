@@ -1,4 +1,7 @@
+#include <iomanip>
+
 #include "Student.hpp"
+
 
 Student::Student(const std::string& name, const std::string& surname, Address address,
     size_t studentNumber, size_t pesel, Gender gender)
@@ -13,9 +16,9 @@ Student::Student(const std::string& name, const std::string& surname, Address ad
 
 std::ostream& operator<<(std::ostream& out, const Student& student)
 {
-    out << student.name_ << ' ' << student.surname_ << ' ' << student.address_ << ' '
-        << student.studentNumber_ << ' ' << student.pesel_ << ' '
-        << Student::getStudentGenderAsString(student.gender_);
+    out << std::setw(12) << student.name_ << ' ' << std::setw(14) << student.surname_ << ' '
+        << std::setw(60) << student.address_ << ' ' << std::setw(8) << student.studentNumber_ << ' '
+        << std::setw(14) << student.pesel_ << ' ' << std::setw(8) << Student::getStudentGenderAsString(student.gender_);
     return out;
 }
 
