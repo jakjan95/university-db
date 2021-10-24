@@ -15,6 +15,7 @@ public:
         SortBySurname,
         DeleteRecord,
         PrintMenu,
+        SaveDatabaseToFile,
     };
 
     void run();
@@ -32,6 +33,7 @@ private:
     void sortByPesel();
     void sortBySurname();
     void deleteRecord();
+    void saveDatabaseToFile();
 
     std::vector<Student> data_;
 };

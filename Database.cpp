@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 
 #include "Database.hpp"
@@ -44,6 +45,9 @@ void Database::performDatabaseOperation(Option operation)
     case Option::PrintMenu:
         printMenu();
         break;
+    case Option::SaveDatabaseToFile:
+        saveDatabaseToFile();
+        break;
     case Option::Quit:
         quit();
         break;
@@ -65,6 +69,7 @@ void Database::printMenu()
     std::cout << "  6   SORT BY SURNAME\n";
     std::cout << "  7   DELETE RECORD\n";
     std::cout << "  8   PRINT MENU\n";
+    std::cout << "  9   SAVE DATABASE TO FILE\n";
     std::cout << "  0   QUIT\n";
     std::cout << "=============================================\n";
 }
@@ -186,4 +191,25 @@ void Database::deleteRecord()
     data_.erase(std::remove_if(data_.begin(), data_.end(),
                     [&index](const auto& el) { return el.getStudentNumber() == index; }),
         data_.end());
+}
+
+void Database::saveDatabaseToFile()
+{
+    std::cout << " SAVE DATABASE AS: ";
+    std::string filneName;
+    std::cin >> filneName;
+
+    if (filneName != "") {
+        std::ofstream output { filneName, std::ios_base::out };
+        if (output.is_open()) {
+            for (const auto& el : data_) {
+                output << el << '\n';
+            }
+            output.close();
+        } else {
+            std::cout << "CANNOT OPEN A FILE!\n";
+        }
+    } else {
+        std::cout << "NO FILE NAME PROVIDED!\n";
+    }
 }
