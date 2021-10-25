@@ -106,7 +106,7 @@ Address Database::createAddress()
         std::cout << "Enter flat number: ";
         size_t flatNum;
         std::cin >> flatNum;
-        tmpAddress.setAddres(flatNum);
+        tmpAddress.setFlatNumber(flatNum);
     }
     return tmpAddress;
 }
