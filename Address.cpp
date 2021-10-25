@@ -1,4 +1,8 @@
+#include <algorithm>
+#include <cctype>
 #include <iostream>
+#include <istream>
+#include <string>
 
 #include "Address.hpp"
 
@@ -30,23 +34,36 @@ std::ostream& operator<<(std::ostream& out, const Address& adr)
 
 std::istream& operator>>(std::istream& in, Address& adr)
 {
-    std::cout << " *** Addres data form ***\n";
-    std::cout << "Enter postal code [XX-XXX]: ";
-    std::cin >> adr.postalCode_;
-    std::cout << "Enter town: ";
-    std::cin >> adr.town_;
-    std::cout << "Enter street: ";
-    std::cin >> adr.street_;
-    std::cout << "Enter building number: ";
-    std::cin >> adr.buildingNumber_;
-    std::cout << "Is it flat? [Y/N]: ";
-    char isFlat;
-    std::cin >> isFlat;
-    if (isFlat == 'Y' || isFlat == 'y') {
-        std::cout << "Enter flat number: ";
-        size_t flatNum;
-        std::cin >> flatNum;
-        adr.flatNumber_.emplace(flatNum);
+    in >> adr.postalCode_ >> std::ws;
+    std::getline(in, adr.town_, ',');
+
+    std::cin >> std::ws;
+    std::string streetWithNumber;
+    std::getline(in, streetWithNumber);
+    size_t posOfBuildingNumber { 0 };
+    for (; posOfBuildingNumber < streetWithNumber.length(); ++posOfBuildingNumber) {
+        if (isdigit(streetWithNumber[posOfBuildingNumber])) {
+            break;
+        }
     }
+    std::string streetPart = streetWithNumber.substr(0, posOfBuildingNumber - 1);
+    adr.street_ = streetPart;
+    std::string buildingNumberString = streetWithNumber.substr(posOfBuildingNumber, streetWithNumber.length() - 1);
+
+    auto isAddressForFlat = std::any_of(buildingNumberString.cbegin(), buildingNumberString.cend(),
+        [](const auto& el) { return el == '/'; });
+    if (isAddressForFlat) {
+        std::stringstream ss { buildingNumberString };
+        std::string buidlingNumberPart;
+        std::getline(ss, buidlingNumberPart, '/');
+        adr.buildingNumber_ = buidlingNumberPart;
+        size_t flatNumberPart;
+        ss >> flatNumberPart;
+        adr.setFlatNumber(flatNumberPart);
+    } else {
+        adr.buildingNumber_ = buildingNumberString;
+        adr.resetFlatNumber();
+    }
+
     return in;
 }
