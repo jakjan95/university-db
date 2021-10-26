@@ -16,6 +16,7 @@ public:
         DeleteRecord,
         PrintMenu,
         SaveDatabaseToFile,
+        ReadDatabaseFromFile
     };
 
     void run();
@@ -35,6 +36,7 @@ private:
     void deleteRecord();
     void saveDatabaseToFile();
     Address createAddress();
+    void readDatabaseFromFile();
 
     std::vector<Student> data_;
 };

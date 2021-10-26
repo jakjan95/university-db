@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "Database.hpp"
 
@@ -48,6 +49,9 @@ void Database::performDatabaseOperation(Option operation)
     case Option::SaveDatabaseToFile:
         saveDatabaseToFile();
         break;
+    case Option::ReadDatabaseFromFile:
+        readDatabaseFromFile();
+        break;
     case Option::Quit:
         quit();
         break;
@@ -70,6 +74,7 @@ void Database::printMenu()
     std::cout << "  7   DELETE RECORD\n";
     std::cout << "  8   PRINT MENU\n";
     std::cout << "  9   SAVE DATABASE TO FILE\n";
+    std::cout << " 10   READ DATABASE FROM FILE\n";
     std::cout << "  0   QUIT\n";
     std::cout << "=============================================\n";
 }
@@ -261,5 +266,28 @@ void Database::saveDatabaseToFile()
         }
     } else {
         std::cout << "NO FILE NAME PROVIDED!\n";
+    }
+}
+
+void Database::readDatabaseFromFile()
+{
+    std::cout << " READ DATABASE FROM FILE: ";
+    std::string filneName;
+    std::cin >> filneName;
+
+    std::ifstream ifs { filneName, std::ios_base::in };
+    if (ifs.is_open()) {
+        for (std::string line; std::getline(ifs, line);) {
+            if (!line.empty()) {
+                Student tmp;
+                std::stringstream ss { line };
+                ss >> tmp;
+                data_.emplace_back(tmp);
+            }
+        }
+        std::cout << " DONE!\n";
+        ifs.close();
+    } else {
+        std::cout << " CANNOT OPEN A FILE" << filneName << "!\n";
     }
 }
