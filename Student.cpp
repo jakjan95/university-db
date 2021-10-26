@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <sstream>
 #include <string>
 
 #include "Student.hpp"
@@ -26,20 +27,32 @@ std::ostream& operator<<(std::ostream& out, const Student& student)
 
 std::istream& operator>>(std::istream& in, Student& student)
 {
-    std::cout << " *** Student data form ***\n";
-    std::cout << "Enter name: ";
-    std::cin >> student.name_;
-    std::cout << "Enter surname: ";
-    std::cin >> student.surname_;
-    std::cout << "Enter addres\n:";
-    std::cin >> student.address_;
-    std::cout << "Enter student number: ";
-    std::cin >> student.studentNumber_;
-    std::cout << "Enter pesel: ";
-    std::cin >> student.pesel_;
-    std::cout << "Enter gender [M/F]: ";
-    char gen;
-    std::cin >> gen;
-    student.gender_ = Student::getStudentGenderFromChar(gen);
+    char tmp;
+    in >> tmp;
+
+    in >> std::ws;
+    std::getline(in, student.name_, '|');
+
+    in >> std::ws;
+    std::getline(in, student.surname_, '|');
+
+    in >> std::ws;
+    std::string studentAddressString;
+    std::getline(in, studentAddressString, '|');
+
+    std::stringstream ssAddress { studentAddressString };
+    ssAddress >> student.address_;
+
+    in >> student.studentNumber_;
+    in >> tmp;
+
+    in >> student.pesel_;
+    in >> tmp;
+
+    std::string gender;
+    in >> std::ws;
+    std::getline(in, gender, '|');
+
+    student.gender_ = Student::getStudentGenderFromString(gender);
     return in;
 }

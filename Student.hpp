@@ -42,6 +42,14 @@ public:
         return Gender::male;
     }
 
+    static Gender getStudentGenderFromString(const std::string& gender)
+    {
+        if (gender == "Female" || gender == "female") {
+            return Gender::female;
+        }
+        return Gender::male;
+    }
+
     friend std::ostream& operator<<(std::ostream& out, const Student& student);
     friend std::istream& operator>>(std::istream& in, Student& student);
 
