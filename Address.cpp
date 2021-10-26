@@ -34,6 +34,7 @@ std::ostream& operator<<(std::ostream& out, const Address& adr)
 
 std::istream& operator>>(std::istream& in, Address& adr)
 {
+    in >> std::ws;
     in >> adr.postalCode_ >> std::ws;
     std::getline(in, adr.town_, ',');
 
@@ -46,7 +47,8 @@ std::istream& operator>>(std::istream& in, Address& adr)
             break;
         }
     }
-    std::string streetPart = streetWithNumber.substr(0, posOfBuildingNumber - 1);
+
+    std::string streetPart = streetWithNumber.substr(1, posOfBuildingNumber - 2);
     adr.street_ = streetPart;
     std::string buildingNumberString = streetWithNumber.substr(posOfBuildingNumber, streetWithNumber.length() - 1);
 
