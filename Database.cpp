@@ -138,19 +138,19 @@ void Database::addStudent()
 
 void Database::printIndexRow()
 {
-    std::cout << " ___________ "
+    std::cout << " ______________ "
               << "______________ "
               << "____________________________________________________________ "
               << "________ "
               << "______________ "
               << "________" << '\n';
-    std::cout << "|    NAME   |"
+    std::cout << "|     NAME     |"
               << "   SURNAME    |"
               << "                          ADDRESS                           |"
               << " INDEX  |"
               << "    PESEL     |"
               << " GENDER |" << '\n';
-    std::cout << " ----------- "
+    std::cout << " -------------- "
               << "-------------- "
               << "------------------------------------------------------------ "
               << "-------- "
@@ -164,6 +164,7 @@ void Database::displayDatabase()
     for (const auto& el : data_) {
         std::cout << el << '\n';
     }
+    std::cout << ' ' << std::string(123, '-') << '\n';
 }
 
 void Database::addTestData()

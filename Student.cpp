@@ -1,7 +1,7 @@
 #include <iomanip>
+#include <string>
 
 #include "Student.hpp"
-
 
 Student::Student(const std::string& name, const std::string& surname, Address address,
     size_t studentNumber, size_t pesel, Gender gender)
@@ -16,9 +16,11 @@ Student::Student(const std::string& name, const std::string& surname, Address ad
 
 std::ostream& operator<<(std::ostream& out, const Student& student)
 {
-    out << std::setw(12) << student.name_ << ' ' << std::setw(14) << student.surname_ << ' '
-        << std::setw(60) << student.address_ << ' ' << std::setw(8) << student.studentNumber_ << ' '
-        << std::setw(14) << student.pesel_ << ' ' << std::setw(8) << Student::getStudentGenderAsString(student.gender_);
+    constexpr char delimeter = '|';
+    out << delimeter << std::setw(14) << student.name_ << delimeter << std::setw(14)
+        << student.surname_ << delimeter << std::setw(60) << student.address_ << delimeter << std::setw(8)
+        << student.studentNumber_ << delimeter << std::setw(14) << student.pesel_ << delimeter << std::setw(8)
+        << Student::getStudentGenderAsString(student.gender_) << delimeter;
     return out;
 }
 
