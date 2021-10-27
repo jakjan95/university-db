@@ -38,7 +38,6 @@ std::istream& operator>>(std::istream& in, Address& adr)
     in >> adr.postalCode_ >> std::ws;
     std::getline(in, adr.town_, ',');
 
-    std::cin >> std::ws;
     std::string streetWithNumber;
     std::getline(in, streetWithNumber);
     size_t posOfBuildingNumber { 0 };
