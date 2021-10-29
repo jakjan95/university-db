@@ -14,13 +14,13 @@ public:
 
     Student() = default;
     Student(const std::string& name, const std::string& surname, Address address,
-        size_t studentNumber, size_t pesel, Gender gender);
+        size_t studentNumber, const std::string& pesel, Gender gender);
 
     std::string getName() const { return name_; }
     std::string getSurname() const { return surname_; }
     Address getAddress() const { return address_; }
     size_t getStudentNumber() const { return studentNumber_; }
-    size_t getPesel() const { return pesel_; }
+    std::string getPesel() const { return pesel_; }
     Gender getStudentSex() const { return gender_; }
 
     static std::string getStudentGenderAsString(const Gender& gen)
@@ -58,6 +58,6 @@ private:
     std::string surname_;
     Address address_;
     size_t studentNumber_;
-    size_t pesel_; // National Identity number in Poland
+    std::string pesel_; // National Identity number in Poland
     Gender gender_;
 };

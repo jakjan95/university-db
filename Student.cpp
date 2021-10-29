@@ -5,7 +5,7 @@
 #include "Student.hpp"
 
 Student::Student(const std::string& name, const std::string& surname, Address address,
-    size_t studentNumber, size_t pesel, Gender gender)
+    size_t studentNumber, const std::string& pesel, Gender gender)
     : name_ { name }
     , surname_ { surname }
     , address_ { address }
@@ -46,8 +46,7 @@ std::istream& operator>>(std::istream& in, Student& student)
     in >> student.studentNumber_;
     in >> tmp;
 
-    in >> student.pesel_;
-    in >> tmp;
+    std::getline(in, student.pesel_, '|');
 
     std::string gender;
     in >> std::ws;

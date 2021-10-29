@@ -18,7 +18,7 @@ void testAddres()
 void testStudent()
 {
     Address adr2 { "12-456", "City", "Sesame street", "15A", 10 };
-    Student stud1 { "Jack", "Sparrow", adr2, 21392, 93010583751, Student::Gender::male };
+    Student stud1 { "Jack", "Sparrow", adr2, 21392, "93010583751", Student::Gender::male };
     std::cout << stud1 << '\n';
     Student stud2;
     // std::cin >> stud2;

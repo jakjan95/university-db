@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 #include "Database.hpp"
 
@@ -129,7 +130,7 @@ void Database::addStudent()
     size_t studentNumber;
     std::cin >> studentNumber;
     std::cout << "Enter pesel: ";
-    size_t pesel;
+    std::string pesel;
     std::cin >> pesel;
     std::cout << "Enter gender [M/F]: ";
     char gen;
@@ -175,17 +176,17 @@ void Database::displayDatabase()
 void Database::addTestData()
 {
     Student testStudent1 { "Jack", "Sparrow",
-        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, 91060427651, Student::Gender::male };
+        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, "05211938254", Student::Gender::male };
     Student testStudent2 { "Jennifer", "Smith",
-        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, 89010583751, Student::Gender::female };
+        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, "88082655655", Student::Gender::female };
     Student testStudent3 { "Betty", "Williams",
-        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, 76010576751, Student::Gender::female };
+        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, "70112233834", Student::Gender::female };
     Student testStudent4 { "Susan", "Baker",
-        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, 90010583314, Student::Gender::female };
+        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, "98112043318", Student::Gender::female };
     Student testStudent5 { "Richard", "Clark",
-        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, 99010488751, Student::Gender::male };
+        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", Student::Gender::male };
     Student testStudent6 { "Brian", "Harrison",
-        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, 65012783785, Student::Gender::male };
+        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", Student::Gender::male };
     data_.emplace_back(testStudent1);
     data_.emplace_back(testStudent2);
     data_.emplace_back(testStudent3);
@@ -212,7 +213,7 @@ void Database::searchBySurname()
 void Database::searchByPesel()
 {
     std::cout << " ENTER PESEL: ";
-    size_t pesel;
+    std::string pesel;
     std::cin >> pesel;
     auto it = std::find_if(data_.cbegin(), data_.cend(),
         [&pesel](const auto& el) { return pesel == el.getPesel(); });
@@ -228,7 +229,7 @@ void Database::sortByPesel()
 {
     std::cout << " SORTING BY PESEL\n";
     std::sort(data_.begin(), data_.end(),
-        [](const auto& lhs, const auto& rhs) { return lhs.getPesel() < rhs.getPesel(); });
+        [](const auto& lhs, const auto& rhs) { return std::stoul(lhs.getPesel()) < std::stoul(rhs.getPesel()); });
 }
 
 void Database::sortBySurname()
