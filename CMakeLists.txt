@@ -27,13 +27,16 @@ set(SRC
     src/Student.cpp)
 
 set(TESTS
-    tests/empty.cpp)
+    tests/empty.cpp
+    tests/Database.cpp)
 
 set(FLAGS -Wall -Wextra -Werror -pedantic -Wconversion -O3)
 
 add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 target_compile_features(${PROJECT_NAME}-lib PRIVATE cxx_std_17)
 target_compile_options(${PROJECT_NAME}-lib PRIVATE ${FLAGS})
+target_link_libraries(${PROJECT_NAME}-lib gtest)
+
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)

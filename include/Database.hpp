@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "gtest/gtest_prod.h"
 
 #include "Student.hpp"
 class Database {
@@ -37,6 +38,13 @@ private:
     void saveDatabaseToFile();
     Address createAddress();
     void readDatabaseFromFile();
+
+    bool isBirthdateValidForPesel(const std::string& pesel);
+    bool isGenderValidForPesel(const std::string& pesel, Student::Gender  gender);
+    bool isPeselCheckSumValid(const std::string& pesel);
+    bool isGivenPeselValid(const std::string& pesel, Student::Gender gender);
+    FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeValid);
+    FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeInvalid);
 
     std::vector<Student> data_;
 };

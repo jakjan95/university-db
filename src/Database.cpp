@@ -1,8 +1,11 @@
 #include <algorithm>
+#include <array>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "Database.hpp"
 
@@ -129,13 +132,18 @@ void Database::addStudent()
     std::cout << "Enter student number: ";
     size_t studentNumber;
     std::cin >> studentNumber;
-    std::cout << "Enter pesel: ";
-    std::string pesel;
-    std::cin >> pesel;
     std::cout << "Enter gender [M/F]: ";
     char gen;
     std::cin >> gen;
     auto gender = Student::getStudentGenderFromChar(gen);
+    std::cout << "Enter pesel: ";
+    std::string pesel;
+    std::cin >> pesel;
+
+    while (!isGivenPeselValid(pesel, gender)) {
+        std::cout << "Pesel is invalid, enter again:";
+        std::cin >> pesel;
+    }
 
     auto tmpAddress = createAddress();
     Student tmpStudent { name, surname, tmpAddress, studentNumber, pesel, gender };
@@ -291,4 +299,66 @@ void Database::readDatabaseFromFile()
     } else {
         std::cout << " CANNOT OPEN A FILE" << filneName << "!\n";
     }
+}
+
+bool Database::isBirthdateValidForPesel(const std::string& pesel)
+{
+    auto monthPart = std::stoi(pesel.substr(2, 2));
+    constexpr std::array<size_t, 4> additionalMonthNumber = { 80, 20, 40, 60 };
+    auto isMonthNumberValid = std::any_of(additionalMonthNumber.cbegin(), additionalMonthNumber.cend(),
+                                  [monthPart](const auto& el) {
+                                      return monthPart % el < 1 || monthPart % el > 12;
+                                  })
+        || (monthPart > 0 && monthPart <= 12);
+
+    if (!isMonthNumberValid) {
+        return false;
+    }
+
+    auto dayPart = std::stoi(pesel.substr(4, 2));
+    if (dayPart < 0 || dayPart > 31) {
+        return false;
+    }
+
+    return true;
+}
+
+bool Database::isGenderValidForPesel(const std::string& pesel, Student::Gender gender)
+{
+    auto genderInformationNumber = pesel[9] - '0';
+    return (gender == Student::Gender::male && genderInformationNumber % 2 != 0)
+        || (gender == Student::Gender::female && genderInformationNumber % 2 == 0);
+}
+
+bool Database::isPeselCheckSumValid(const std::string& pesel)
+{
+    constexpr std::array<size_t, 10> weights { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+    std::array<size_t, 10> peselArray {};
+    for (size_t i = 0; i < pesel.size(); ++i) {
+        peselArray[i] = pesel[i] - '0';
+    }
+    auto checksum = std::inner_product(peselArray.begin(), peselArray.end(), weights.begin(), 0);
+    auto expectedLastNumber = (checksum % 10) == 0 ? 0 : 10 - (checksum % 10);
+    auto lastNumberInPesel = pesel[10] - '0';
+    return lastNumberInPesel == expectedLastNumber;
+}
+
+bool Database::isGivenPeselValid(const std::string& pesel, Student::Gender  gender)
+{
+    if (pesel.length() != 11 || pesel.empty()) {
+        return false;
+    }
+
+    if (!isBirthdateValidForPesel(pesel)) {
+        return false;
+    }
+
+    if (!isGenderValidForPesel(pesel, gender)) {
+        return false;
+    }
+
+    if (!isPeselCheckSumValid(pesel)) {
+        return false;
+    }
+    return true;
 }
