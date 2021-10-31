@@ -1,0 +1,17 @@
+name: university-db
+
+on: [push, pull_request]
+
+jobs:
+  checker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: Create build directory
+      run: mkdir build
+    - name: Compile
+      working-directory: build
+      run: |
+        cmake ..
+        make
