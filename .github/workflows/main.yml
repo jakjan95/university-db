@@ -15,3 +15,7 @@ jobs:
       run: |
         cmake ..
         make
+    - name: Run UTs
+      working-directory: build
+      run: |
+        ctest -V
