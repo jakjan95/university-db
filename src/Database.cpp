@@ -135,7 +135,7 @@ void Database::addStudent()
     std::cout << "Enter gender [M/F]: ";
     char gen;
     std::cin >> gen;
-    auto gender = Student::getStudentGenderFromChar(gen);
+    auto gender = User::getUserGenderFromChar(gen);
     std::cout << "Enter pesel: ";
     std::string pesel;
     std::cin >> pesel;
@@ -184,17 +184,17 @@ void Database::displayDatabase()
 void Database::addTestData()
 {
     Student testStudent1 { "Jack", "Sparrow",
-        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, "05211938254", Student::Gender::male };
+        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, "05211938254", User::Gender::male };
     Student testStudent2 { "Jennifer", "Smith",
-        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, "88082655655", Student::Gender::female };
+        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, "88082655655", User::Gender::female };
     Student testStudent3 { "Betty", "Williams",
-        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, "70112233834", Student::Gender::female };
+        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, "70112233834", User::Gender::female };
     Student testStudent4 { "Susan", "Baker",
-        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, "98112043318", Student::Gender::female };
+        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, "98112043318", User::Gender::female };
     Student testStudent5 { "Richard", "Clark",
-        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", Student::Gender::male };
+        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", User::Gender::male };
     Student testStudent6 { "Brian", "Harrison",
-        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", Student::Gender::male };
+        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", User::Gender::male };
     data_.emplace_back(testStudent1);
     data_.emplace_back(testStudent2);
     data_.emplace_back(testStudent3);
@@ -323,11 +323,11 @@ bool Database::isBirthdateValidForPesel(const std::string& pesel)
     return true;
 }
 
-bool Database::isGenderValidForPesel(const std::string& pesel, Student::Gender gender)
+bool Database::isGenderValidForPesel(const std::string& pesel, User::Gender gender)
 {
     auto genderInformationNumber = pesel[9] - '0';
-    return (gender == Student::Gender::male && genderInformationNumber % 2 != 0)
-        || (gender == Student::Gender::female && genderInformationNumber % 2 == 0);
+    return (gender == User::Gender::male && genderInformationNumber % 2 != 0)
+        || (gender == User::Gender::female && genderInformationNumber % 2 == 0);
 }
 
 bool Database::isPeselCheckSumValid(const std::string& pesel)
@@ -343,7 +343,7 @@ bool Database::isPeselCheckSumValid(const std::string& pesel)
     return lastNumberInPesel == expectedLastNumber;
 }
 
-bool Database::isGivenPeselValid(const std::string& pesel, Student::Gender  gender)
+bool Database::isGivenPeselValid(const std::string& pesel, User::Gender  gender)
 {
     if (pesel.length() != 11 || pesel.empty()) {
         return false;

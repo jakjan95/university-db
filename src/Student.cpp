@@ -5,23 +5,19 @@
 #include "Student.hpp"
 
 Student::Student(const std::string& name, const std::string& surname, Address address,
-    size_t studentNumber, const std::string& pesel, Gender gender)
-    : name_ { name }
-    , surname_ { surname }
-    , address_ { address }
+    size_t studentNumber, const std::string& pesel, User::Gender gender)
+    : User(name, surname, address, pesel, gender)
     , studentNumber_ { studentNumber }
-    , pesel_ { pesel }
-    , gender_ { gender }
 {
 }
 
-std::ostream& operator<<(std::ostream& out, const Student& student)
+std::ostream& Student::printInformations(std::ostream& out) const
 {
     constexpr char delimeter = '|';
-    out << delimeter << std::setw(14) << student.name_ << delimeter << std::setw(14)
-        << student.surname_ << delimeter << std::setw(60) << student.address_ << delimeter << std::setw(8)
-        << student.studentNumber_ << delimeter << std::setw(14) << student.pesel_ << delimeter << std::setw(8)
-        << Student::getStudentGenderAsString(student.gender_) << delimeter;
+    out << delimeter << std::setw(14) << name_ << delimeter << std::setw(14)
+        << surname_ << delimeter << std::setw(60) << address_ << delimeter << std::setw(8)
+        << studentNumber_ << delimeter << std::setw(14) << pesel_ << delimeter << std::setw(8)
+        << User::getUserGenderAsString(gender_) << delimeter;
     return out;
 }
 
@@ -52,6 +48,6 @@ std::istream& operator>>(std::istream& in, Student& student)
     in >> std::ws;
     std::getline(in, gender, '|');
 
-    student.gender_ = Student::getStudentGenderFromString(gender);
+    student.gender_ = User::getUserGenderFromString(gender);
     return in;
 }
