@@ -7,8 +7,8 @@ TEST(DatabasePeselValidation, PeselsShouldBeValid)
 {
     Database cut;
 
-    const auto female = Student::Gender::female;
-    const auto male = Student::Gender::male;
+    const auto female = Gender::female;
+    const auto male = Gender::male;
 
     const std::string validFemalePesel = "46122028562";
     const std::string validMalePesel = "50091733974";
@@ -21,8 +21,8 @@ TEST(DatabasePeselValidation, PeselsShouldBeInvalid)
 {
     Database cut;
 
-    const auto female = Student::Gender::female;
-    const auto male = Student::Gender::male;
+    const auto female = Gender::female;
+    const auto male = Gender::male;
 
     const std::string peselWithInvalidChecksum1 = "84071791635";
     const std::string peselWithInvalidChecksum2 = "12213197221";

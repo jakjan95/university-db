@@ -40,9 +40,9 @@ private:
     void readDatabaseFromFile();
 
     bool isBirthdateValidForPesel(const std::string& pesel);
-    bool isGenderValidForPesel(const std::string& pesel, Student::Gender  gender);
+    bool isGenderValidForPesel(const std::string& pesel, Gender gender);
     bool isPeselCheckSumValid(const std::string& pesel);
-    bool isGivenPeselValid(const std::string& pesel, Student::Gender gender);
+    bool isGivenPeselValid(const std::string& pesel, Gender gender);
     FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeValid);
     FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeInvalid);
 

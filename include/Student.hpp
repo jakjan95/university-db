@@ -6,7 +6,7 @@ class Student : public User {
 public:
     Student() = default;
     Student(const std::string& name, const std::string& surname, Address address,
-        size_t studentNumber, const std::string& pesel, User::Gender gender);
+        size_t studentNumber, const std::string& pesel, Gender gender);
     size_t getStudentNumber() const { return studentNumber_; }
     std::ostream& printInformations(std::ostream& out) const override;
 

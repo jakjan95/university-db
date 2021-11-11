@@ -5,7 +5,7 @@
 #include "Student.hpp"
 
 Student::Student(const std::string& name, const std::string& surname, Address address,
-    size_t studentNumber, const std::string& pesel, User::Gender gender)
+    size_t studentNumber, const std::string& pesel, Gender gender)
     : User(name, surname, address, pesel, gender)
     , studentNumber_ { studentNumber }
 {
@@ -17,7 +17,7 @@ std::ostream& Student::printInformations(std::ostream& out) const
     out << delimeter << std::setw(14) << name_ << delimeter << std::setw(14)
         << surname_ << delimeter << std::setw(60) << address_ << delimeter << std::setw(8)
         << studentNumber_ << delimeter << std::setw(14) << pesel_ << delimeter << std::setw(8)
-        << User::getUserGenderAsString(gender_) << delimeter;
+        << GenderTools::getUserGenderAsString(gender_) << delimeter;
     return out;
 }
 
@@ -48,6 +48,6 @@ std::istream& operator>>(std::istream& in, Student& student)
     in >> std::ws;
     std::getline(in, gender, '|');
 
-    student.gender_ = User::getUserGenderFromString(gender);
+    student.gender_ = GenderTools::getUserGenderFromString(gender);
     return in;
 }
