@@ -14,42 +14,14 @@ Student::Student(const std::string& name, const std::string& surname, Address ad
 std::ostream& Student::printInformations(std::ostream& out) const
 {
     constexpr char delimeter = '|';
-    out << delimeter << std::setw(14) << name_ << delimeter
-        << std::setw(14) << surname_ << delimeter
-        << std::setw(60) << address_ << delimeter
-        << std::setw(14) << pesel_ << delimeter
-        << std::setw(8) << GenderTools::getUserGenderAsString(gender_) << delimeter
-        << std::setw(8) << studentNumber_ << delimeter;
+    out << std::setw(8) << studentNumber_ << delimeter;
     return out;
 }
 
-std::istream& operator>>(std::istream& in, Student& student)
+std::istream& Student::readInformations(std::istream& in)
 {
-    char tmp;
+    char tmp {};
+    in >> studentNumber_;
     in >> tmp;
-
-    in >> std::ws;
-    std::getline(in, student.name_, '|');
-
-    in >> std::ws;
-    std::getline(in, student.surname_, '|');
-
-    in >> std::ws;
-    std::string studentAddressString;
-    std::getline(in, studentAddressString, '|');
-
-    std::stringstream ssAddress { studentAddressString };
-    ssAddress >> student.address_;
-
-    std::getline(in, student.pesel_, '|');
-
-    std::string gender;
-    in >> std::ws;
-    std::getline(in, gender, '|');
-    student.gender_ = GenderTools::getUserGenderFromString(gender);
-
-    in >> student.studentNumber_;
-    in >> tmp;
-
     return in;
 }
