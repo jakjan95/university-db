@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "gtest/gtest_prod.h"
 
 #include "Student.hpp"
@@ -46,5 +47,5 @@ private:
     FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeValid);
     FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeInvalid);
 
-    std::vector<Student> data_;
+    std::vector<std::unique_ptr<Student>> data_;
 };

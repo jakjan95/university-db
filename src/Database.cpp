@@ -2,9 +2,11 @@
 #include <array>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <numeric>
 #include <sstream>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 #include "Database.hpp"
@@ -86,6 +88,7 @@ void Database::printMenu()
 void Database::quit()
 {
     std::cout << " QUITTING THE PROGRAM....... \n";
+    data_.clear();
     std::exit(0);
 }
 
@@ -146,8 +149,8 @@ void Database::addStudent()
     }
 
     auto tmpAddress = createAddress();
-    Student tmpStudent { name, surname, tmpAddress, studentNumber, pesel, gender };
-    data_.emplace_back(tmpStudent);
+    auto tmpStudent = std::make_unique<Student>(name, surname, tmpAddress, studentNumber, pesel, gender);
+    data_.emplace_back(std::move(tmpStudent));
 }
 
 void Database::printIndexRow()
@@ -156,7 +159,7 @@ void Database::printIndexRow()
               << "______________ "
               << "____________________________________________________________ "
               << "______________ "
-              << "________ " 
+              << "________ "
               << "________" << '\n';
     std::cout << "|     NAME     |"
               << "   SURNAME    |"
@@ -168,7 +171,7 @@ void Database::printIndexRow()
               << "-------------- "
               << "------------------------------------------------------------ "
               << "-------------- "
-              << "-------- " 
+              << "-------- "
               << "-------- " << '\n';
 }
 
@@ -176,31 +179,31 @@ void Database::displayDatabase()
 {
     printIndexRow();
     for (const auto& el : data_) {
-        std::cout << el << '\n';
+        std::cout << *el << '\n';
     }
     std::cout << ' ' << std::string(123, '-') << '\n';
 }
 
 void Database::addTestData()
 {
-    Student testStudent1 { "Jack", "Sparrow",
-        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, "05211938254", Gender::male };
-    Student testStudent2 { "Jennifer", "Smith",
-        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, "88082655655", Gender::female };
-    Student testStudent3 { "Betty", "Williams",
-        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, "70112233834", Gender::female };
-    Student testStudent4 { "Susan", "Baker",
-        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, "98112043318", Gender::female };
-    Student testStudent5 { "Richard", "Clark",
-        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", Gender::male };
-    Student testStudent6 { "Brian", "Harrison",
-        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", Gender::male };
-    data_.emplace_back(testStudent1);
-    data_.emplace_back(testStudent2);
-    data_.emplace_back(testStudent3);
-    data_.emplace_back(testStudent4);
-    data_.emplace_back(testStudent5);
-    data_.emplace_back(testStudent6);
+    auto testStudent1 = std::make_unique<Student>("Jack", "Sparrow",
+        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, "05211938254", Gender::male);
+    auto testStudent2 = std::make_unique<Student>("Jennifer", "Smith",
+        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, "84102367182", Gender::female);
+    auto testStudent3 = std::make_unique<Student>("Betty", "Williams",
+        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, "73032726648", Gender::female);
+    auto testStudent4 = std::make_unique<Student>("Susan", "Baker",
+        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, "96083054267", Gender::female);
+    auto testStudent5 = std::make_unique<Student>("Richard", "Clark",
+        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", Gender::male);
+    auto testStudent6 = std::make_unique<Student>("Brian", "Harrison",
+        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", Gender::male);
+    data_.emplace_back(std::move(testStudent1));
+    data_.emplace_back(std::move(testStudent2));
+    data_.emplace_back(std::move(testStudent3));
+    data_.emplace_back(std::move(testStudent4));
+    data_.emplace_back(std::move(testStudent5));
+    data_.emplace_back(std::move(testStudent6));
 }
 
 void Database::searchBySurname()
@@ -209,10 +212,10 @@ void Database::searchBySurname()
     std::string surname;
     std::cin >> surname;
     auto it = std::find_if(data_.cbegin(), data_.cend(),
-        [&surname](const auto& el) { return surname == el.getSurname(); });
+        [&surname](const auto& el) { return surname == el->getSurname(); });
 
     if (it != data_.cend()) {
-        std::cout << *it << '\n';
+        std::cout << *(*it) << '\n';
     } else {
         std::cout << " STUDENT WITH SURNAME " << surname << " NOT FOUND!\n";
     }
@@ -224,10 +227,10 @@ void Database::searchByPesel()
     std::string pesel;
     std::cin >> pesel;
     auto it = std::find_if(data_.cbegin(), data_.cend(),
-        [&pesel](const auto& el) { return pesel == el.getPesel(); });
+        [&pesel](const auto& el) { return pesel == el->getPesel(); });
 
     if (it != data_.cend()) {
-        std::cout << *it << '\n';
+        std::cout << *(*it) << '\n';
     } else {
         std::cout << " STUDENT WITH PESEL " << pesel << " NOT FOUND!\n";
     }
@@ -237,14 +240,14 @@ void Database::sortByPesel()
 {
     std::cout << " SORTING BY PESEL\n";
     std::sort(data_.begin(), data_.end(),
-        [](const auto& lhs, const auto& rhs) { return std::stoul(lhs.getPesel()) < std::stoul(rhs.getPesel()); });
+        [](const auto& lhs, const auto& rhs) { return std::stoul(lhs->getPesel()) < std::stoul(rhs->getPesel()); });
 }
 
 void Database::sortBySurname()
 {
     std::cout << " SORTING BY SURNAME\n";
     std::sort(data_.begin(), data_.end(),
-        [](const auto& lhs, const auto& rhs) { return lhs.getSurname() < rhs.getSurname(); });
+        [](const auto& lhs, const auto& rhs) { return lhs->getSurname() < rhs->getSurname(); });
 }
 
 void Database::deleteRecord()
@@ -253,7 +256,7 @@ void Database::deleteRecord()
     size_t index;
     std::cin >> index;
     data_.erase(std::remove_if(data_.begin(), data_.end(),
-                    [&index](const auto& el) { return el.getStudentNumber() == index; }),
+                    [&index](const auto& el) { return el->getStudentNumber() == index; }),
         data_.end());
 }
 
@@ -267,7 +270,7 @@ void Database::saveDatabaseToFile()
         std::ofstream output { filneName, std::ios_base::out };
         if (output.is_open()) {
             for (const auto& el : data_) {
-                output << el << '\n';
+                output << *el << '\n';
             }
             output.close();
         } else {
@@ -288,10 +291,10 @@ void Database::readDatabaseFromFile()
     if (ifs.is_open()) {
         for (std::string line; std::getline(ifs, line);) {
             if (!line.empty()) {
-                Student tmp;
+                auto tmp = std::make_unique<Student>();
                 std::stringstream ss { line };
-                ss >> tmp;
-                data_.emplace_back(tmp);
+                ss >> *tmp;
+                data_.emplace_back(std::move(tmp));
             }
         }
         std::cout << " DONE!\n";
