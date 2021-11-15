@@ -14,7 +14,7 @@ Student::Student(const std::string& name, const std::string& surname, Address ad
 std::ostream& Student::printInformations(std::ostream& out) const
 {
     constexpr char delimeter = '|';
-    out << std::setw(8) << studentNumber_ << delimeter;
+    out << std::setw(8) << studentNumber_ << delimeter << std::setw(8) << '-' << delimeter;
     return out;
 }
 
@@ -22,6 +22,8 @@ std::istream& Student::readInformations(std::istream& in)
 {
     char tmp {};
     in >> studentNumber_;
+    in >> tmp;
+    in >> tmp;
     in >> tmp;
     return in;
 }
