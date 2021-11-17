@@ -11,6 +11,5 @@ public:
     
 private:
     std::ostream& printInformations(std::ostream& out) const override;
-    std::istream& readInformations(std::istream& in) override;
     size_t studentNumber_;
 };

@@ -11,6 +11,7 @@
 
 #include "Database.hpp"
 #include "Student.hpp"
+#include "UserLoader.hpp"
 
 void Database::run()
 {
@@ -297,10 +298,11 @@ void Database::readDatabaseFromFile()
     if (ifs.is_open()) {
         for (std::string line; std::getline(ifs, line);) {
             if (!line.empty()) {
-                auto tmp = std::make_unique<Student>();
+                auto tmp = std::make_unique<UserLoader>();
                 std::stringstream ss { line };
                 ss >> *tmp;
-                data_.emplace_back(std::move(tmp));
+                data_.emplace_back(std::unique_ptr<User>(tmp->getUserData()));
+
             }
         }
         std::cout << " DONE!\n";

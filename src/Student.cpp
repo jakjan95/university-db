@@ -17,13 +17,3 @@ std::ostream& Student::printInformations(std::ostream& out) const
     out << std::setw(8) << studentNumber_ << delimeter << std::setw(8) << '-' << delimeter;
     return out;
 }
-
-std::istream& Student::readInformations(std::istream& in)
-{
-    char tmp {};
-    in >> studentNumber_;
-    in >> tmp;
-    in >> tmp;
-    in >> tmp;
-    return in;
-}

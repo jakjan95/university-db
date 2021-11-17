@@ -20,12 +20,14 @@ set(HEADERS
     include/Address.hpp
     include/Database.hpp
     include/Student.hpp
+    include/UserLoader.hpp
     include/User.hpp)
-
+    
 set(SRC
     src/Address.cpp
     src/Database.cpp
     src/Student.cpp
+    src/UserLoader.cpp
     src/User.cpp)
 
 set(TESTS

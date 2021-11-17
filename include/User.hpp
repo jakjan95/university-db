@@ -28,11 +28,9 @@ public:
     std::string getPesel() const { return pesel_; }
     Gender getUserGender() const { return gender_; }
     friend std::ostream& operator<<(std::ostream& out, const User& user);
-    friend std::istream& operator>>(std::istream& in, User& user);
 
 protected:
     virtual std::ostream& printInformations(std::ostream& out) const = 0;
-    virtual std::istream& readInformations(std::istream& in) = 0;
 
     std::string name_;
     std::string surname_;

@@ -27,35 +27,6 @@ std::ostream& operator<<(std::ostream& out, const User& user)
     return out;
 }
 
-std::istream& operator>>(std::istream& in, User& user)
-{
-    char tmp {};
-    in >> tmp;
-
-    in >> std::ws;
-    std::getline(in, user.name_, '|');
-
-    in >> std::ws;
-    std::getline(in, user.surname_, '|');
-
-    in >> std::ws;
-    std::string userAddressString;
-    std::getline(in, userAddressString, '|');
-
-    std::stringstream ssAddress { userAddressString };
-    ssAddress >> user.address_;
-
-    std::getline(in, user.pesel_, '|');
-
-    std::string gender;
-    in >> std::ws;
-    std::getline(in, gender, '|');
-    user.gender_ = GenderTools::getUserGenderFromString(gender);
-
-    user.readInformations(in);
-    return in;
-}
-
 namespace GenderTools {
 std::string getUserGenderAsString(const Gender& gen)
 {
