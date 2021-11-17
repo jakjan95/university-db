@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Database.hpp"
+#include "Student.hpp"
 
 void Database::run()
 {
@@ -46,8 +47,8 @@ void Database::performDatabaseOperation(Option operation)
     case Option::SortBySurname:
         sortBySurname();
         break;
-    case Option::DeleteRecord:
-        deleteRecord();
+    case Option::DeleteStudentRecord:
+        deleteStudentRecord();
         break;
     case Option::PrintMenu:
         printMenu();
@@ -77,7 +78,7 @@ void Database::printMenu()
     std::cout << "  4   SEARCH BY PESEL\n";
     std::cout << "  5   SORT BY PESEL\n";
     std::cout << "  6   SORT BY SURNAME\n";
-    std::cout << "  7   DELETE RECORD\n";
+    std::cout << "  7   DELETE STUDENT RECORD\n";
     std::cout << "  8   PRINT MENU\n";
     std::cout << "  9   SAVE DATABASE TO FILE\n";
     std::cout << " 10   READ DATABASE FROM FILE\n";
@@ -253,13 +254,15 @@ void Database::sortBySurname()
         [](const auto& lhs, const auto& rhs) { return lhs->getSurname() < rhs->getSurname(); });
 }
 
-void Database::deleteRecord()
+void Database::deleteStudentRecord()
 {
     std::cout << " ENTER STUDENT INDEX TO DELETE: ";
     size_t index;
     std::cin >> index;
     data_.erase(std::remove_if(data_.begin(), data_.end(),
-                    [&index](const auto& el) { return el->getStudentNumber() == index; }),
+                    [&index](const auto& el) {
+                        return dynamic_cast<Student*>(el.get()) == nullptr ? false : dynamic_cast<Student&>(*el).getStudentNumber() == index;
+                    }),
         data_.end());
 }
 

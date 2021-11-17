@@ -4,7 +4,7 @@
 #include <memory>
 #include "gtest/gtest_prod.h"
 
-#include "Student.hpp"
+#include "User.hpp"
 class Database {
 public:
     enum class Option {
@@ -15,7 +15,7 @@ public:
         SearchByPesel,
         SortByPesel,
         SortBySurname,
-        DeleteRecord,
+        DeleteStudentRecord,
         PrintMenu,
         SaveDatabaseToFile,
         ReadDatabaseFromFile
@@ -35,7 +35,7 @@ private:
     void searchByPesel();
     void sortByPesel();
     void sortBySurname();
-    void deleteRecord();
+    void deleteStudentRecord();
     void saveDatabaseToFile();
     Address createAddress();
     void readDatabaseFromFile();
@@ -47,5 +47,5 @@ private:
     FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeValid);
     FRIEND_TEST(DatabasePeselValidation, PeselsShouldBeInvalid);
 
-    std::vector<std::unique_ptr<Student>> data_;
+    std::vector<std::unique_ptr<User>> data_;
 };
