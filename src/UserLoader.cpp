@@ -1,5 +1,9 @@
-#include "UserLoader.hpp"
+#include <algorithm>
+#include <string>
+
+#include "Employee.hpp"
 #include "Student.hpp"
+#include "UserLoader.hpp"
 
 std::istream& operator>>(std::istream& in, UserLoader& userLoader)
 {
@@ -31,12 +35,19 @@ std::istream& operator>>(std::istream& in, UserLoader& userLoader)
     Gender gen;
     gen = GenderTools::getUserGenderFromString(gender);
 
-    if (in.peek() == '-') {
-        // TODO Employee handling
-    } else {
-        size_t studentNumber;
-        in >> studentNumber;
+    std::string studentNumberOrHypen;
+    std::getline(in, studentNumberOrHypen, '|');
+    studentNumberOrHypen.erase(
+        std::remove(studentNumberOrHypen.begin(), studentNumberOrHypen.end(), ' '),
+        studentNumberOrHypen.end());
+
+    if (studentNumberOrHypen == std::string("-")) {
+        size_t salary;
+        in >> salary;
         in >> tmp;
+        userLoader.user.reset(dynamic_cast<User*>(new Employee(name, surname, adr, pesel, gen, salary)));
+    } else {
+        size_t studentNumber = std::stoi(studentNumberOrHypen);
         in >> tmp;
         in >> tmp;
         userLoader.user.reset(dynamic_cast<User*>(new Student(name, surname, adr, studentNumber, pesel, gen)));

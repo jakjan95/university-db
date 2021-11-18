@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Database.hpp"
+#include "Employee.hpp"
 #include "Student.hpp"
 #include "UserLoader.hpp"
 
@@ -203,12 +204,20 @@ void Database::addTestData()
         Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", Gender::male);
     auto testStudent6 = std::make_unique<Student>("Brian", "Harrison",
         Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", Gender::male);
+
+    auto testEmployee1 = std::make_unique<Employee>("John", "Ward",
+        Address { "31-409", "Krakow", "Topolowa", "29" }, "76090242118", Gender::male, 5000);
+    auto testEmployee2 = std::make_unique<Employee>("Naomi", "Yoshida",
+        Address { "00-005", "Warsaw", "Topolowa", "29" }, "57122784561", Gender::female, 7000);
+
     data_.emplace_back(std::move(testStudent1));
     data_.emplace_back(std::move(testStudent2));
     data_.emplace_back(std::move(testStudent3));
     data_.emplace_back(std::move(testStudent4));
     data_.emplace_back(std::move(testStudent5));
     data_.emplace_back(std::move(testStudent6));
+    data_.emplace_back(std::move(testEmployee1));
+    data_.emplace_back(std::move(testEmployee2));
 }
 
 void Database::searchBySurname()
