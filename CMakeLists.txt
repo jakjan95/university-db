@@ -22,7 +22,9 @@ set(HEADERS
     include/Student.hpp
     include/UserLoader.hpp
     include/User.hpp
-    include/Employee.hpp)
+    include/Employee.hpp
+    include/RandomAddressFactory.hpp)
+
     
 set(SRC
     src/Address.cpp
@@ -30,7 +32,8 @@ set(SRC
     src/Student.cpp
     src/UserLoader.cpp
     src/User.cpp
-    src/Employee.cpp)
+    src/Employee.cpp
+    src/RandomAddressFactory.cpp)
 
 set(TESTS
     tests/empty.cpp

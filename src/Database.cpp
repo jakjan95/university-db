@@ -13,6 +13,7 @@
 #include "Employee.hpp"
 #include "Student.hpp"
 #include "UserLoader.hpp"
+#include "RandomAddressFactory.hpp"
 
 void Database::run()
 {
@@ -192,23 +193,24 @@ void Database::displayDatabase()
 
 void Database::addTestData()
 {
+    RandomAddressFactory addresFactory;
     auto testStudent1 = std::make_unique<Student>("Jack", "Sparrow",
-        Address { "00-001", "Warsaw", "Kwiatowa", "5", 3 }, 2102, "05211938254", Gender::male);
+        addresFactory.makeRandomAddress(), 2102, "05211938254", Gender::male);
     auto testStudent2 = std::make_unique<Student>("Jennifer", "Smith",
-        Address { "31-403", "Krakow", "Owocowa", "99", 6 }, 2106, "84102367182", Gender::female);
+        addresFactory.makeRandomAddress(), 2106, "84102367182", Gender::female);
     auto testStudent3 = std::make_unique<Student>("Betty", "Williams",
-        Address { "50-054", "Wroclaw", "Wielkiego Bohatera", "15A", 10 }, 2100, "73032726648", Gender::female);
+        addresFactory.makeRandomAddress(), 2100, "73032726648", Gender::female);
     auto testStudent4 = std::make_unique<Student>("Susan", "Baker",
-        Address { "40-000", "Katowice", "Wielkiego Artysty", "150" }, 2193, "96083054267", Gender::female);
+        addresFactory.makeRandomAddress(), 2193, "96083054267", Gender::female);
     auto testStudent5 = std::make_unique<Student>("Richard", "Clark",
-        Address { "60-001", "Poznan", "Warszawska", "121A", 95 }, 2152, "95011572158", Gender::male);
+        addresFactory.makeRandomAddress(), 2152, "95011572158", Gender::male);
     auto testStudent6 = std::make_unique<Student>("Brian", "Harrison",
-        Address { "70-445", "Lodz", "Wodnej rury", "15" }, 2109, "67010349198", Gender::male);
+        addresFactory.makeRandomAddress(), 2109, "67010349198", Gender::male);
 
     auto testEmployee1 = std::make_unique<Employee>("John", "Ward",
-        Address { "31-409", "Krakow", "Topolowa", "29" }, "76090242118", Gender::male, 5000);
+        addresFactory.makeRandomAddress(), "76090242118", Gender::male, 5000);
     auto testEmployee2 = std::make_unique<Employee>("Naomi", "Yoshida",
-        Address { "00-005", "Warsaw", "Topolowa", "29" }, "57122784561", Gender::female, 7000);
+        addresFactory.makeRandomAddress(), "57122784561", Gender::female, 7000);
 
     data_.emplace_back(std::move(testStudent1));
     data_.emplace_back(std::move(testStudent2));
