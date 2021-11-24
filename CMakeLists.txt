@@ -14,7 +14,7 @@ FetchContent_MakeAvailable(googletest)
 include_directories(include)
 include_directories(src)
 include_directories(tests)
-
+include_directories(external)
 
 set(HEADERS
     include/Address.hpp
@@ -23,8 +23,8 @@ set(HEADERS
     include/UserLoader.hpp
     include/User.hpp
     include/Employee.hpp
-    include/RandomAddressFactory.hpp)
-
+    include/RandomAddressFactory.hpp
+    include/PeselGenerator.hpp)
     
 set(SRC
     src/Address.cpp
@@ -33,7 +33,8 @@ set(SRC
     src/UserLoader.cpp
     src/User.cpp
     src/Employee.cpp
-    src/RandomAddressFactory.cpp)
+    src/RandomAddressFactory.cpp
+    src/PeselGenerator.cpp)
 
 set(TESTS
     tests/empty.cpp
@@ -45,7 +46,6 @@ add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 target_compile_features(${PROJECT_NAME}-lib PRIVATE cxx_std_17)
 target_compile_options(${PROJECT_NAME}-lib PRIVATE ${FLAGS})
 target_link_libraries(${PROJECT_NAME}-lib gtest)
-
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)

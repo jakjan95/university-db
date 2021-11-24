@@ -14,6 +14,7 @@
 #include "Student.hpp"
 #include "UserLoader.hpp"
 #include "RandomAddressFactory.hpp"
+#include "PeselGenerator.hpp"
 
 void Database::run()
 {
@@ -194,23 +195,24 @@ void Database::displayDatabase()
 void Database::addTestData()
 {
     RandomAddressFactory addresFactory;
+    PeselGenerator pslGen;
     auto testStudent1 = std::make_unique<Student>("Jack", "Sparrow",
-        addresFactory.makeRandomAddress(), 2102, "05211938254", Gender::male);
+        addresFactory.makeRandomAddress(), 2102, pslGen.generateMaleRandomPesel(), Gender::male);
     auto testStudent2 = std::make_unique<Student>("Jennifer", "Smith",
-        addresFactory.makeRandomAddress(), 2106, "84102367182", Gender::female);
+        addresFactory.makeRandomAddress(), 2106, pslGen.generateFemaleRandomPesel(), Gender::female);
     auto testStudent3 = std::make_unique<Student>("Betty", "Williams",
-        addresFactory.makeRandomAddress(), 2100, "73032726648", Gender::female);
+        addresFactory.makeRandomAddress(), 2100, pslGen.generateFemaleRandomPesel(), Gender::female);
     auto testStudent4 = std::make_unique<Student>("Susan", "Baker",
-        addresFactory.makeRandomAddress(), 2193, "96083054267", Gender::female);
+        addresFactory.makeRandomAddress(), 2193, pslGen.generateFemaleRandomPesel(), Gender::female);
     auto testStudent5 = std::make_unique<Student>("Richard", "Clark",
-        addresFactory.makeRandomAddress(), 2152, "95011572158", Gender::male);
+        addresFactory.makeRandomAddress(), 2152, pslGen.generateMaleRandomPesel(), Gender::male);
     auto testStudent6 = std::make_unique<Student>("Brian", "Harrison",
-        addresFactory.makeRandomAddress(), 2109, "67010349198", Gender::male);
+        addresFactory.makeRandomAddress(), 2109, pslGen.generateMaleRandomPesel(), Gender::male);
 
     auto testEmployee1 = std::make_unique<Employee>("John", "Ward",
-        addresFactory.makeRandomAddress(), "76090242118", Gender::male, 5000);
+        addresFactory.makeRandomAddress(), pslGen.generateMaleRandomPesel(), Gender::male, 5000);
     auto testEmployee2 = std::make_unique<Employee>("Naomi", "Yoshida",
-        addresFactory.makeRandomAddress(), "57122784561", Gender::female, 7000);
+        addresFactory.makeRandomAddress(), pslGen.generateFemaleRandomPesel(), Gender::female, 7000);
 
     data_.emplace_back(std::move(testStudent1));
     data_.emplace_back(std::move(testStudent2));
