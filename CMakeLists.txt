@@ -24,7 +24,8 @@ set(HEADERS
     include/User.hpp
     include/Employee.hpp
     include/RandomAddressFactory.hpp
-    include/PeselGenerator.hpp)
+    include/PeselGenerator.hpp
+    include/RandomUserFactory.hpp)
     
 set(SRC
     src/Address.cpp
@@ -34,7 +35,8 @@ set(SRC
     src/User.cpp
     src/Employee.cpp
     src/RandomAddressFactory.cpp
-    src/PeselGenerator.cpp)
+    src/PeselGenerator.cpp
+    src/RandomUserFactory.cpp)
 
 set(TESTS
     tests/empty.cpp

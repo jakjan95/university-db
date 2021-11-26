@@ -1,3 +1,5 @@
+#include "Database.hpp"
+
 #include <algorithm>
 #include <array>
 #include <fstream>
@@ -9,12 +11,10 @@
 #include <type_traits>
 #include <vector>
 
-#include "Database.hpp"
 #include "Employee.hpp"
+#include "RandomUserFactory.hpp"
 #include "Student.hpp"
 #include "UserLoader.hpp"
-#include "RandomAddressFactory.hpp"
-#include "PeselGenerator.hpp"
 
 void Database::run()
 {
@@ -194,34 +194,11 @@ void Database::displayDatabase()
 
 void Database::addTestData()
 {
-    RandomAddressFactory addresFactory;
-    PeselGenerator pslGen;
-    auto testStudent1 = std::make_unique<Student>("Jack", "Sparrow",
-        addresFactory.makeRandomAddress(), 2102, pslGen.generateMaleRandomPesel(), Gender::male);
-    auto testStudent2 = std::make_unique<Student>("Jennifer", "Smith",
-        addresFactory.makeRandomAddress(), 2106, pslGen.generateFemaleRandomPesel(), Gender::female);
-    auto testStudent3 = std::make_unique<Student>("Betty", "Williams",
-        addresFactory.makeRandomAddress(), 2100, pslGen.generateFemaleRandomPesel(), Gender::female);
-    auto testStudent4 = std::make_unique<Student>("Susan", "Baker",
-        addresFactory.makeRandomAddress(), 2193, pslGen.generateFemaleRandomPesel(), Gender::female);
-    auto testStudent5 = std::make_unique<Student>("Richard", "Clark",
-        addresFactory.makeRandomAddress(), 2152, pslGen.generateMaleRandomPesel(), Gender::male);
-    auto testStudent6 = std::make_unique<Student>("Brian", "Harrison",
-        addresFactory.makeRandomAddress(), 2109, pslGen.generateMaleRandomPesel(), Gender::male);
-
-    auto testEmployee1 = std::make_unique<Employee>("John", "Ward",
-        addresFactory.makeRandomAddress(), pslGen.generateMaleRandomPesel(), Gender::male, 5000);
-    auto testEmployee2 = std::make_unique<Employee>("Naomi", "Yoshida",
-        addresFactory.makeRandomAddress(), pslGen.generateFemaleRandomPesel(), Gender::female, 7000);
-
-    data_.emplace_back(std::move(testStudent1));
-    data_.emplace_back(std::move(testStudent2));
-    data_.emplace_back(std::move(testStudent3));
-    data_.emplace_back(std::move(testStudent4));
-    data_.emplace_back(std::move(testStudent5));
-    data_.emplace_back(std::move(testStudent6));
-    data_.emplace_back(std::move(testEmployee1));
-    data_.emplace_back(std::move(testEmployee2));
+    RandomUserFactory userFactory;
+    constexpr size_t numOfRandomUsers = 100;
+    for (size_t i = 0; i < numOfRandomUsers; ++i) {
+        data_.emplace_back(userFactory.makeRandomUser());
+    }
 }
 
 void Database::searchBySurname()
