@@ -11,6 +11,11 @@ Employee::Employee(const std::string& name, const std::string& surname, Address 
 {
 }
 
+void Employee::setSalary(size_t salary)
+{
+    salary_ = salary;
+}
+
 std::ostream& Employee::printInformations(std::ostream& out) const
 {
     constexpr char delimeter = '|';

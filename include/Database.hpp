@@ -18,7 +18,8 @@ public:
         DeleteStudentRecord,
         PrintMenu,
         SaveDatabaseToFile,
-        ReadDatabaseFromFile
+        ReadDatabaseFromFile,
+        ModifyEmpolyeeSalary
     };
 
     void run();
@@ -39,6 +40,7 @@ private:
     void saveDatabaseToFile();
     Address createAddress();
     void readDatabaseFromFile();
+    void modifyEmpolyeeSalary();
 
     bool isBirthdateValidForPesel(const std::string& pesel);
     bool isGenderValidForPesel(const std::string& pesel, Gender gender);

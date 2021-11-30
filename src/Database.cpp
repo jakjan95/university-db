@@ -4,6 +4,7 @@
 #include <array>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <numeric>
 #include <sstream>
@@ -63,6 +64,9 @@ void Database::performDatabaseOperation(Option operation)
     case Option::ReadDatabaseFromFile:
         readDatabaseFromFile();
         break;
+    case Option::ModifyEmpolyeeSalary:
+        modifyEmpolyeeSalary();
+        break;
     case Option::Quit:
         quit();
         break;
@@ -86,6 +90,7 @@ void Database::printMenu()
     std::cout << "  8   PRINT MENU\n";
     std::cout << "  9   SAVE DATABASE TO FILE\n";
     std::cout << " 10   READ DATABASE FROM FILE\n";
+    std::cout << " 11   MODIFY EMPLOYE SALARY\n";
     std::cout << "  0   QUIT\n";
     std::cout << "=============================================\n";
 }
@@ -299,6 +304,29 @@ void Database::readDatabaseFromFile()
         ifs.close();
     } else {
         std::cout << " CANNOT OPEN A FILE" << filneName << "!\n";
+    }
+}
+
+void Database::modifyEmpolyeeSalary()
+{
+    std::cout << " ENTER EMPLOYEE PESEL: ";
+    std::string pesel;
+    std::cin >> pesel;
+
+    auto iter = std::find_if(data_.begin(), data_.end(), [&pesel](const auto& el) { return el->getPesel() == pesel; });
+    if (iter == data_.end()) {
+        std::cout << " USER NOT FOUND\n";
+        return;
+    }
+    
+    auto employee = dynamic_cast<Employee*>((*iter).get());
+    if (!employee) {
+        std::cout << " USER IS NOT EMPLOYEE\n";
+    } else {
+        std::cout << " ENTER NEW SALARY VALUE FOR EMPLOYEE WITH PESEL NUMBER " << pesel << ": ";
+        size_t salary;
+        std::cin >> salary;
+        employee->setSalary(salary);
     }
 }
 
