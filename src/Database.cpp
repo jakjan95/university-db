@@ -67,6 +67,9 @@ void Database::performDatabaseOperation(Option operation)
     case Option::ModifyEmpolyeeSalary:
         modifyEmpolyeeSalary();
         break;
+    case Option::SortBySalary:
+        sortBySalary();
+        break;
     case Option::Quit:
         quit();
         break;
@@ -91,6 +94,7 @@ void Database::printMenu()
     std::cout << "  9   SAVE DATABASE TO FILE\n";
     std::cout << " 10   READ DATABASE FROM FILE\n";
     std::cout << " 11   MODIFY EMPLOYE SALARY\n";
+    std::cout << " 12   SORT BY SALARY\n";
     std::cout << "  0   QUIT\n";
     std::cout << "=============================================\n";
 }
@@ -318,7 +322,7 @@ void Database::modifyEmpolyeeSalary()
         std::cout << " USER NOT FOUND\n";
         return;
     }
-    
+
     auto employee = dynamic_cast<Employee*>((*iter).get());
     if (!employee) {
         std::cout << " USER IS NOT EMPLOYEE\n";
@@ -328,6 +332,18 @@ void Database::modifyEmpolyeeSalary()
         std::cin >> salary;
         employee->setSalary(salary);
     }
+}
+
+void Database::sortBySalary()
+{
+    std::cout << " SORTING BY SALARY\n";
+    auto firstStudent = std::stable_partition(data_.begin(), data_.end(),
+        [](const auto& el) { return dynamic_cast<Employee*>(el.get()) != nullptr; });
+
+    std::sort(data_.begin(), firstStudent,
+        [](const auto& lhs, const auto& rhs) {
+            return dynamic_cast<Employee&>(*lhs).getSalary() < dynamic_cast<Employee&>(*rhs).getSalary();
+        });
 }
 
 bool Database::isBirthdateValidForPesel(const std::string& pesel)

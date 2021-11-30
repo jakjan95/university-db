@@ -19,7 +19,8 @@ public:
         PrintMenu,
         SaveDatabaseToFile,
         ReadDatabaseFromFile,
-        ModifyEmpolyeeSalary
+        ModifyEmpolyeeSalary,
+        SortBySalary
     };
 
     void run();
@@ -41,6 +42,8 @@ private:
     Address createAddress();
     void readDatabaseFromFile();
     void modifyEmpolyeeSalary();
+    void sortBySalary();
+
 
     bool isBirthdateValidForPesel(const std::string& pesel);
     bool isGenderValidForPesel(const std::string& pesel, Gender gender);
